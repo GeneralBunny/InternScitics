@@ -1,0 +1,9 @@
+In the Boston event data, there are total 8139 data (8139 rows).
+
+Merge_ID_x.xlsx: By matching the email address, 1585 observations are appended with MEMBER.ID.
+Merge_ID_y.xlsx: By matching first name, last name and company name, 589 observations are appended with member ID. Among them, 61 are not in the previous file.
+Merge_ID_z.xlsx: By matching first name, last name and address.1, 226 observations are appended with member ID. Among them, 32 are not in the previous two files.
+Merge_ID_x1.xlsx: By matching first name, last name and address.2, 33 observations are appended with member ID. Among them,  1 is not in the previous three files.
+Merge_ID_y1.xlsx: By matching last name and company, 685 observations are appended with member ID. Among the, 27 are not in the previous four files.
+
+Together, we have appended 1585+61+32+1+27 = 1706 data (with 427 unique MEMBER.ID).
