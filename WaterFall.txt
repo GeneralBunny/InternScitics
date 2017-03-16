@@ -1,3 +1,5 @@
+This is the QC file for matching the AMA MEMBER.ID from membership dataset to event dataset.
+
 In the Boston event data, there are total 8139 data (8139 rows).
 
 Merge_ID_x.xlsx: By matching the email address, 1585 observations are appended with MEMBER.ID.
