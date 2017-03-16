@@ -1,0 +1,696 @@
+---
+title: Append ID to AMA (Boston) Event Data
+output: html_document
+---
+
+This data analysis is to label the member in the AMA (Boston) Even data with their AMA membership
+ID using the AMA membership files from Sep 2013 to Dec 2016 (missing Aug 2015 data).
+
+This file needs to set the current working directory to where it contains the two folders. To run this file, instead of press the "Knit HTML" button in R Studio, type "rmarkdown::render("AMA_Boston_ID.Rmd")" in the console. This will knit in the current session instead of a background session, so that you can play with the varialbes in console. This pdf file will be updated, but you have to click open it.
+
+
+```{ r setup}
+opts_chunk$set(echo = TRUE, tidy = TRUE)
+```
+
+```{r results = "hide"}
+library(xlsx);
+library(dplyr);
+setwd("C:/Clients/2016 AMA Boston/XiWang");
+filePath1 <- c("/Original_membership_data/");
+filePath2 <- c("/Boston_Event_Data/");
+```
+## 1. Read in Event data.
+```{r ReadInBosEvt, cache = TRUE}
+ BosEvt <- read.xlsx(paste(getwd(),filePath2,"AMABostonEvent.xlsx",sep = ""), sheetIndex = 1);
+```
+
+## 2. Read in Membership data.
+```{r ReadInSep2013, cache = TRUE}
+Sep2013<- read.xlsx(paste(getwd(),filePath1,"2013 09_September AMA Membership.xlsx",sep = ""), sheetIndex = 1);
+```
+
+```{r ReadInOct2013,cache = TRUE}
+Oct2013<- read.xlsx(paste(getwd(),filePath1,"2013 10_October AMA Membership.xlsx",sep = ""), sheetIndex = 1);
+```
+
+```{r ReadInNov2013, cache = TRUE}
+Nov2013<- read.xlsx(paste(getwd(),filePath1,"2013 11_November AMA Membership.xlsx",sep = ""), sheetIndex = 1);
+```
+
+```{r ReadInDec2013,cache=TRUE}
+Dec2013<-read.xlsx(paste(getwd(),filePath1, "2013 12_December AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+
+```{r ReadInJan2014,cache=TRUE}
+Jan2014<-read.xlsx(paste(getwd(),filePath1, "2014 01_January AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInFeb2014,cache=TRUE}
+Feb2014<-read.xlsx(paste(getwd(),filePath1,"2014 02_February AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInMar2014,cache=TRUE}
+Mar2014<-read.xlsx(paste(getwd(),filePath1,"2014 03_March AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInApr2014,cache=TRUE}
+Apr2014<-read.xlsx(paste(getwd(),filePath1,"2014 04_April AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInMay2014,cache=TRUE}
+May2014<-read.xlsx(paste(getwd(),filePath1,"2014 05_May AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInJun2014,cache=TRUE}
+Jun2014<-read.xlsx(paste(getwd(),filePath1,"2014 06_June AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInJul2014,cache=TRUE}
+Jul2014<-read.xlsx(paste(getwd(),filePath1,"2014 07_July AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInAug2014,cache=TRUE}
+Aug2014<-read.xlsx(paste(getwd(),filePath1,"2014 08_August AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInSep2014,cache=TRUE}
+Sep2014<-read.xlsx(paste(getwd(),filePath1,"2014 09_September AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInOct2014,cache=TRUE}
+Oct2014<-read.xlsx(paste(getwd(),filePath1,"2014 10_October AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInNov2014,cache=TRUE}
+Nov2014<-read.xlsx(paste(getwd(),filePath1,"2014 11_November AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInDec2014,cache=TRUE}
+Dec2014<-read.xlsx(paste(getwd(),filePath1,"2014 12_December AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInJan2015,cache=TRUE}
+Jan2015<-read.xlsx(paste(getwd(),filePath1,"2015 01_January AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInFeb2015,cache=TRUE}
+Feb2015<-read.xlsx(paste(getwd(),filePath1,"2015 02_February AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+
+```{r ReadInMar2015,cache=TRUE}
+Mar2015<-read.xlsx(paste(getwd(),filePath1,"2015 03_March AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInApr2015,cache=TRUE}
+Apr2015<-read.xlsx(paste(getwd(),filePath1,"2015 04_April AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInMay2015,cache=TRUE}
+May2015<-read.xlsx(paste(getwd(),filePath1,"2015 05_May AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInJun2015,cache=TRUE}
+Jun2015<-read.xlsx(paste(getwd(),filePath1,"2015 06_June AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInJul2015,cache=TRUE}
+Jul2015<-read.xlsx(paste(getwd(),filePath1,"2015 07_July AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInSep2015,cache=TRUE}
+Sep2015<-read.xlsx(paste(getwd(),filePath1,"2015 09_September AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInOct2015,cache=TRUE}
+Oct2015<-read.xlsx(paste(getwd(),filePath1,"2015 10_October AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInNov2015,cache=TRUE}
+Nov2015<-read.xlsx(paste(getwd(),filePath1,"2015 11_November AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInDec2015,cache=TRUE}
+Dec2015<-read.xlsx(paste(getwd(),filePath1,"2015 12_December AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInJan2016,cache=TRUE}
+Jan2016<-read.xlsx(paste(getwd(),filePath1,"2016 01_January AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInFeb2016,cache=TRUE}
+Feb2016<-read.xlsx(paste(getwd(),filePath1,"2016 02_February AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInMar2016,cache=TRUE}
+Mar2016<-read.xlsx(paste(getwd(),filePath1,"2016 03_March AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInApr2016,cache=TRUE}
+Apr2016<-read.xlsx(paste(getwd(),filePath1,"2016 04_April AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+
+```{r ReadInMay2016,cache=TRUE}
+May2016<-read.xlsx(paste(getwd(),filePath1,"2016 05_May AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInJun2016,cache=TRUE}
+Jun2016<-read.xlsx(paste(getwd(),filePath1,"2016 06_June AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInJul2016,cache=TRUE}
+Jul2016<-read.xlsx(paste(getwd(),filePath1,"2016 07_July AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInAug2016,cache=TRUE}
+Aug2016<-read.xlsx(paste(getwd(),filePath1,"2016 08_August AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+```{r ReadInSep2016,cache=TRUE}
+Sep2016<-read.xlsx(paste(getwd(),filePath1,"2016 09_September AMA Membership.xlsx",sep=""), sheetIndex = 1);
+```
+
+```{r ReadInOct2016,cache=TRUE}
+Oct2016<-read.xlsx(paste(getwd(),filePath1,"MemberRoster_10 October 2016.xlsx",sep=""), sheetIndex = 1);
+```
+
+```{r ReadInNov2016,cache=TRUE}
+Nov2016<-read.xlsx(paste(getwd(),filePath1,"MemberRoster_11 November 2016.xlsx",sep=""), sheetIndex = 1);
+```
+
+```{r ReadInDec2016,cache=TRUE}
+Dec2016<-read.xlsx(paste(getwd(),filePath1,"MemberRoster_12 December 2016.xlsx",sep=""), sheetIndex = 1);
+```
+
+## 3. Convert membership file ID, names, email, address.
+```{r convertIDNameEamilAddress}
+# Nov2013 is not included in NAMES.
+NAMES<-c("Sep2013","Oct2013","Dec2013","Jan2014","Feb2014","Mar2014",
+          "Apr2014","May2014","Jun2014","Jul2014","Aug2014","Sep2014",
+          "Oct2014","Nov2014","Dec2014","Jan2015","Feb2015","Mar2015",
+          "Apr2015","May2015","Jun2015","Jul2015","Sep2015","Oct2015",
+          "Nov2015","Dec2015","Jan2016","Feb2016","Mar2016","Apr2016",
+          "May2016","Jun2016","Jul2016","Aug2016","Sep2016","Oct2016",
+          "Nov2016","Dec2016");
+
+for (i in NAMES)
+{j = get(i);
+j$MEMBER.ID <- as.numeric(paste(j$MEMBER.ID));
+
+j$FIRST.NAME[j$FIRST.NAME == "" | j$FIRST.NAME == " "] <- NA;
+j$FIRST.NAME <- tolower(as.character(j$FIRST.NAME));
+
+j$MIDDLE.NAME[j$MIDDLE.NAME == "" | j$MIDDLE.NAME == " "] <- NA;
+j$MIDDLE.NAME <- tolower(as.character(j$MIDDLE.NAME));
+
+j$LAST.NAME[j$LAST.NAME == "" | j$LAST.NAME == " "] <- NA;
+j$LAST.NAME <- tolower(as.character(j$LAST.NAME));
+
+j$LABEL.NAME[j$LABEL.NAME == "" | j$LABEL.NAME == " "] <- NA;
+j$LABEL.NAME <- tolower(as.character(j$LABEL.NAME));
+
+j$EMAIL.ADDRESS[j$EMAIL.ADDRESS == "" | j$EMAIL.ADDRESS == " "] <- NA;
+j$EMAIL.ADDRESS <- tolower(as.character(j$EMAIL.ADDRESS));
+
+j$COMPANY.NAME[j$COMPANY.NAME == "" | j$COMPANY.NAME == " "] <- NA;
+j$COMPANY.NAME <- tolower(as.character(j$COMPANY.NAME));
+
+j$PRIMARY.ADDRESS.1[j$PRIMARY.ADDRESS.1 == "" | j$PRIMARY.ADDRESS.1 == " "] <- NA;
+j$PRIMARY.ADDRESS.1 <- tolower(as.character(j$PRIMARY.ADDRESS.1));
+
+j$PRIMARY.ADDRESS.2[j$PRIMARY.ADDRESS.2 == "" | j$PRIMARY.ADDRESS.2 == " "] <- NA;
+j$PRIMARY.ADDRESS.2 <- tolower(as.character(j$PRIMARY.ADDRESS.2));
+
+j$SECONDARY.ADDRESS.1[j$SECONDARY.ADDRESS.1 == "" | j$SECONDARY.ADDRESS.1 == " "] <- NA;
+j$SECONDARY.ADDRESS.1 <- tolower(as.character(j$SECONDARY.ADDRESS.1));
+
+j$SECONDARY.ADDRESS.2[j$SECONDARY.ADDRESS.2 == "" | j$SECONDARY.ADDRESS.2 == " "] <- NA;
+j$SECONDARY.ADDRESS.2 <- tolower(as.character(j$SECONDARY.ADDRESS.2));
+
+j$PRIMARY.CITY[j$PRIMARY.CITY == "" | j$PRIMARY.CITY == " "] <- NA;
+j$PRIMARY.CITY <- tolower(as.character(j$PRIMARY.CITY));
+
+j$PRIMARY.STATE[j$PRIMARY.STATE == "" | j$PRIMARY.STATE == " "] <- NA;
+j$PRIMARY.STATE <- tolower(as.character(j$PRIMARY.STATE));
+
+j$PRIMARY.POSTAL.CODE[j$PRIMARY.POSTAL.CODE == "" | j$PRIMARY.POSTAL.CODE == " "] <- NA;
+
+j$PRIMARY.COUNTRY[j$PRIMARY.COUNTRY == "" | j$PRIMARY.COUNTRY == " "] <- NA;
+j$PRIMARY.COUNTRY <- tolower(as.character(j$PRIMARY.COUNTRY));
+
+assign(i,j);
+}
+```
+
+## 4. Convert the date to date type.
+```{r convertDate,results="hide"}
+# These are the files with date format: "%Y-%m-%d"
+NAMES3 <-c("Sep2013","Oct2014","Nov2014","Dec2014","Jan2015","Feb2015",
+           "Mar2015","Apr2015","May2015","Jun2015","Jul2015","Sep2015",
+           "Oct2015","Nov2015","Dec2015","Jan2016","Feb2016","Mar2016",
+           "Apr2016","May2016","Jun2016","Jul2016","Aug2016","Sep2016",
+           "Oct2016","Nov2016","Dec2016");
+
+# These are the files with date format: "%m/%d/%Y"
+NAMES4<-c("Oct2013","Dec2013","Jan2014","Feb2014","Mar2014","Apr2014",
+          "May2014","Jun2014","Jul2014","Aug2014","Sep2014");
+
+# MEMBER.SINCE.DATE
+for (i in NAMES3)
+{j = get(i);
+j$MEMBER.SINCE.DATE <- as.Date(j$MEMBER.SINCE.DATE,"%Y-%m-%d");
+assign(i,j);
+}
+
+for (i in NAMES4)
+{j = get(i);
+j$MEMBER.SINCE.DATE <- as.Date(j$MEMBER.SINCE.DATE,"%m/%d/%Y");
+assign(i,j);
+}
+
+# EXPIRATION.DATE
+for (i in NAMES3)
+{j = get(i);
+j$EXPIRATION.DATE <- as.Date(j$EXPIRATION.DATE,"%Y-%m-%d");
+assign(i,j);
+}
+
+for (i in NAMES4)
+{j = get(i);
+j$EXPIRATION.DATE <- as.Date(j$EXPIRATION.DATE,"%m/%d/%Y");
+assign(i,j);
+}
+
+# DATE.PULLED
+for (i in NAMES3)
+{j = get(i);
+j$DATE.PULLED <- as.Date(j$DATE.PULLED,"%Y-%m-%d");
+assign(i,j);
+}
+
+for (i in NAMES4)
+{j = get(i);
+j$DATE.PULLED <- as.Date(j$DATE.PULLED,"%m/%d/%Y");
+assign(i,j);
+}
+
+
+# NAMES5 are the ones that these four columns need to be converted 
+# to date type:"ADDRESS.CHANGE.DATE", "COMMUNICATION.CHANGE.DATE",
+# "STUDENT.GRADUATION.DATE", "DATE.LAST.MODIFIED".
+# It turns out that NAMES5 is the same as NAMES4
+NAMES5 <-c("Oct2013","Dec2013","Jan2014","Feb2014","Mar2014",
+           "Apr2014","May2014","Jun2014","Jul2014","Aug2014","Sep2014");
+
+# ADDRESS.CHANGE.DATE
+for (i in NAMES5)
+{j = get(i);
+j$ADDRESS.CHANGE.DATE <- as.Date(j$ADDRESS.CHANGE.DATE,"%m/%d/%Y");
+assign(i,j);
+}
+
+# COMMUNICATION.CHANGE.DATE
+for (i in NAMES5)
+{j = get(i);
+j$COMMUNICATION.CHANGE.DATE <- as.Date(j$COMMUNICATION.CHANGE.DATE,"%m/%d/%Y");
+assign(i,j);
+}
+
+# NAMES6 are the ones whose COMMUNICATION.CHANGE.DATE are logic type.
+NAMES6 <-c("May2015","Jun2015","Jul2015","Sep2015","Oct2015",
+           "Dec2015","Jan2016","Mar2016","Apr2016","May2016","Jul2016",
+           "Aug2016");
+
+# COMMUNICATION.CHANGE.DATE
+for (i in NAMES6)
+{j = get(i);
+j$COMMUNICATION.CHANGE.DATE <- as.Date(as.character(j$COMMUNICATION.CHANGE.DATE),"%m/%d/%Y");
+assign(i,j);
+}
+
+
+# STUDENT.GRADUATE.DATE
+for (i in NAMES5)
+{j = get(i);
+j$STUDENT.GRADUATION.DATE <- as.Date(j$STUDENT.GRADUATION.DATE,"%m/%d/%Y");
+assign(i,j);
+}
+
+# DATE.LAST.MODIFIED
+for (i in NAMES5)
+{j = get(i);
+j$DATE.LAST.MODIFIED <- as.Date(j$DATE.LAST.MODIFIED,"%m/%d/%Y");
+assign(i,j);
+}
+```
+
+## 5. Merge all the membership files (except Nov2013).
+```{r mergeAllMemberFiles}
+identical(Sep2015$COMPANY.NAME,Sep2015$COMPANY.NAME.1);
+Sep2015<-subset(Sep2015,select= (names(Sep2015) != "COMPANY.NAME.1"));
+
+All<-Sep2013;
+for (i in NAMES[2:length(NAMES)])
+{j = get(i);
+All<-merge(All,j,all=TRUE); 
+}
+
+dim(All);
+
+# double chekc if All has any NA values.
+dim(All[is.na(All$MEMBER.ID),]);
+dim(All[is.na(All$MEMBER.SINCE.DATE),]);
+dim(All[is.na(All$EXPIRATION.DATE),]);
+dim(All[is.na(All$DATE.PULLED),]);
+dim(All[is.na(All$STATUS),]);
+dim(All[is.na(All$FIRST.NAME),]);
+dim(All[is.na(All$LAST.NAME),]);
+dim(All[is.na(All$EMAIL.ADDRESS),]);
+```
+
+## 6. Include the Nov2013 data.
+```{r MergeNov2013}
+Nov2013$MEMBER.ID  <- as.numeric(paste(Nov2013$MEMBER.ID));
+
+Nov2013$FIRST.NAME[Nov2013$FIRST.NAME == "" | Nov2013$FIRST.NAME == " "] <- NA;
+Nov2013$FIRST.NAME <- tolower(as.character(Nov2013$FIRST.NAME));
+
+Nov2013$MIDDLE.NAME[Nov2013$MIDDLE.NAME == "" | Nov2013$MIDDLE.NAME == " "] <- NA;
+Nov2013$MIDDLE.NAME <- tolower(as.character(Nov2013$MIDDLE.NAME));
+
+Nov2013$LAST.NAME[Nov2013$LAST.NAME == "" | Nov2013$LAST.NAME == " "] <- NA;
+Nov2013$LAST.NAME <- tolower(as.character(Nov2013$LAST.NAME));
+
+Nov2013$COMPANY.NAME[Nov2013$COMPANY.NAME == "" | Nov2013$COMPANY.NAME == " "] <- NA;
+Nov2013$COMPANY.NAME <- tolower(as.character(Nov2013$COMPANY.NAME));
+
+Nov2013$PRIMARY.CITY[Nov2013$PRIMARY.CITY == "" | Nov2013$PRIMARY.CITY == " "] <- NA;
+Nov2013$PRIMARY.CITY <- tolower(as.character(Nov2013$PRIMARY.CITY));
+
+Nov2013$PRIMARY.STATE[Nov2013$PRIMARY.STATE == "" | Nov2013$PRIMARY.STATE == " "] <- NA;
+Nov2013$PRIMARY.STATE <- tolower(as.character(Nov2013$PRIMARY.STATE));
+
+Nov2013$PRIMARY.POSTAL.CODE[Nov2013$PRIMARY.POSTAL.CODE == "" | Nov2013$PRIMARY.POSTAL.CODE == " "] <- NA;
+
+Nov2013$PRIMARY.COUNTRY[Nov2013$PRIMARY.COUNTRY == "" | Nov2013$PRIMARY.COUNTRY == " "] <- NA;
+Nov2013$PRIMARY.COUNTRY <- tolower(as.character(Nov2013$PRIMARY.COUNTRY));
+
+Nov2013$PRIMARY.ADDRESS.1[Nov2013$PRIMARY.ADDRESS.1 == "" | Nov2013$PRIMARY.ADDRESS.1 == " "] <- NA;
+Nov2013$PRIMARY.ADDRESS.1 <- tolower(as.character(Nov2013$PRIMARY.ADDRESS.1));
+
+Nov2013$PRIMARY.ADDRESS.2[Nov2013$PRIMARY.ADDRESS.2 == "" | Nov2013$PRIMARY.ADDRESS.2 == " "] <- NA;
+Nov2013$PRIMARY.ADDRESS.2 <- tolower(as.character(Nov2013$PRIMARY.ADDRESS.2));
+
+
+Nov2013$DATE.PULLED <- as.Date("2013-11-30",format = "%Y-%m-%d");
+All <- merge(All, Nov2013, all = TRUE);
+```
+## 7. Convert name, email, company, address in event data.
+```{r BosEvt}
+BosEvt$First.Name <- tolower(as.character(BosEvt$First.Name));
+BosEvt$Last.Name <- tolower(as.character(BosEvt$Last.Name));
+BosEvt$Email <- tolower(as.character(BosEvt$Email));
+
+BosEvt$Home.Address.1[BosEvt$Home.Address.1 == "" | BosEvt$Home.Address.1 == " "] <- NA;
+BosEvt$Home.Address.1 <- tolower(as.character(BosEvt$Home.Address.1));
+
+BosEvt$Home.Address.2[BosEvt$Home.Address.2 == "" | BosEvt$Home.Address.2 == " "] <- NA;
+BosEvt$Home.Address.2 <- tolower(as.character(BosEvt$Home.Address.2));
+
+BosEvt$Company[BosEvt$Company == "" | BosEvt$Company == " "] <- NA;
+BosEvt$Company <- tolower(as.character(BosEvt$Company));
+
+BosEvt$Home.City[BosEvt$Home.City == "" | BosEvt$Home.City == " "] <- NA;
+BosEvt$Home.City <- tolower(as.character(BosEvt$Home.City));
+
+BosEvt$Home.State[BosEvt$Home.State == "" | BosEvt$Home.State == " "] <- NA;
+BosEvt$Home.State <- tolower(as.character(BosEvt$Home.State));
+
+BosEvt$Home.Zip[BosEvt$Home.Zip == "" | BosEvt$Home.Zip == " "] <- NA;
+BosEvt$Home.Zip <- tolower(as.character(BosEvt$Home.Zip));
+
+BosEvt$Home.Country[BosEvt$Home.Country == "" | BosEvt$Home.Country == " "] <- NA;
+BosEvt$Home.Country <- tolower(as.character(BosEvt$Home.Country));
+
+dim(BosEvt);
+```
+
+## 8 Use email to append the ID.
+```{r useEmail}
+dim(unique(na.omit(All[c("EMAIL.ADDRESS")])));
+dim(unique(na.omit(All[c("MEMBER.ID")])));
+sub1 <- subset(All, !(is.na(All$EMAIL.ADDRESS))& !(is.na(All$MEMBER.ID)));
+dim(unique(sub1[c("EMAIL.ADDRESS", "MEMBER.ID")]));
+#In BosEvt, there is no Email == NA.
+dim(filter(BosEvt, is.na(BosEvt$Email)));
+table(BosEvt$Email %in% All$EMAIL.ADDRESS);
+
+EmailGroup <- split(All, All$EMAIL.ADDRESS);
+
+# to see in membership file if same email address has more than one ID.
+b1 <- data.frame(MEMBER.ID = numeric(), FIRST.NAME = character(),MIDDLE.NAME = character(), LAST.NAME = character(),
+                      LABEL.NAME = character(), 
+                      EMAIL.ADDRESS = character(), FULL.NAME = character());
+b1 <- do.call(rbind,lapply(EmailGroup, function(x) {
+        if (length(unique(x$MEMBER.ID)) > 1)
+                {data.frame(MEMBER.ID = x$MEMBER.ID,
+                           FIRST.NAME = x$FIRST.NAME,
+                           MIDDLE.NAME  = x$MIDDLE.NAME,
+                           LAST.NAME = x$LAST.NAME,
+                           LABEL.NAME = x$LABEL.NAME,
+                           EMAIL.ADDRESS = x$EMAIL.ADDRESS,
+                           FULL.NAME = x$FULL.NAME)}
+        else
+                data.frame = NULL}
+        ));
+dim(b1);
+
+AMAEmailUnique <- unique(na.omit(All[c("MEMBER.ID","EMAIL.ADDRESS")]));
+MERGE1 <- merge(BosEvt, AMAEmailUnique, by.x = "Email",by.y = "EMAIL.ADDRESS",all.x = TRUE, all.y = FALSE);
+dim(MERGE1[!(is.na(MERGE1$MEMBER.ID)),]);
+dim(unique(MERGE1["MEMBER.ID"]));
+```
+
+## 9. Use first name, last name and company to append ID.
+```{r FirstLastNameCompany}
+NameCompany <-  unique(na.omit(All[c("MEMBER.ID", "FIRST.NAME","LAST.NAME", "COMPANY.NAME")]));
+MERGE2 <- merge(MERGE1, NameCompany, by.x = c("First.Name","Last.Name", "Company"), by.y = c("FIRST.NAME","LAST.NAME", "COMPANY.NAME"), all.x = TRUE, all.y=FALSE);
+
+dim(MERGE2[!(is.na(MERGE2$MEMBER.ID.y)),]);
+dim(MERGE2[is.na(MERGE2$MEMBER.ID.x) & !(is.na(MERGE2$MEMBER.ID.y)),]);
+dim(MERGE2[!(is.na(MERGE2$MEMBER.ID.x)) & !(is.na(MERGE2$MEMBER.ID.y)),])
+
+table(MERGE2$MEMBER.ID.y == MERGE2$MEMBER.ID.x);
+which(!(MERGE2$MEMBER.ID.y == MERGE2$MEMBER.ID.x));
+MERGE2[which(!(MERGE2$MEMBER.ID.y == MERGE2$MEMBER.ID.x)),]$MEMBER.ID.y <- NA;
+# 1931 1932 1934 1935, should choose ID.x, not ID.y
+
+
+dim(unique(MERGE2["MEMBER.ID.y"]));
+table(unique(na.omit(MERGE2$MEMBER.ID.y)) %in% unique(na.omit(MERGE2$MEMBER.ID.x)));
+```
+## 10. Use first name, last name and address 1 to append ID.
+```{r FirstLastNameAddress1}
+NameAdrs1 <-  unique(na.omit(All[c("MEMBER.ID", "FIRST.NAME","LAST.NAME", "PRIMARY.ADDRESS.1")]));
+MERGE3 <- merge(MERGE2, NameAdrs1, by.x = c("First.Name","Last.Name", "Home.Address.1"), by.y = c("FIRST.NAME","LAST.NAME", "PRIMARY.ADDRESS.1"), all.x = TRUE, all.y=FALSE);
+
+colnames(MERGE3)[which(names(MERGE3) == "MEMBER.ID")] <- "MEMBER.ID.z";
+
+dim(MERGE3[!(is.na(MERGE3$MEMBER.ID.z)),]);
+dim(MERGE3[is.na(MERGE3$MEMBER.ID.x) & is.na(MERGE3$MEMBER.ID.y) & !(is.na(MERGE3$MEMBER.ID.z)),]);
+
+dim(MERGE3[(!(is.na(MERGE3$MEMBER.ID.x))) & (!(is.na(MERGE3$MEMBER.ID.z))),]);
+table(MERGE3$MEMBER.ID.z == MERGE3$MEMBER.ID.x);
+
+dim(MERGE3[!(is.na(MERGE3$MEMBER.ID.y)) & !(is.na(MERGE3$MEMBER.ID.z)),]);
+table(MERGE3$MEMBER.ID.z == MERGE3$MEMBER.ID.y);
+
+table(unique(na.omit(MERGE3$MEMBER.ID.z)) %in% unique(na.omit(MERGE3$MEMBER.ID.x)));
+table(unique(na.omit(MERGE3$MEMBER.ID.z)) %in% unique(na.omit(MERGE3$MEMBER.ID.y)));
+table((unique(na.omit(MERGE3$MEMBER.ID.z)) %in% unique(na.omit(MERGE3$MEMBER.ID.x))) & (unique(na.omit(MERGE3$MEMBER.ID.z)) %in% unique(na.omit(MERGE3$MEMBER.ID.y))));
+table(!(unique(na.omit(MERGE3$MEMBER.ID.z)) %in% unique(na.omit(MERGE3$MEMBER.ID.x))) & !(unique(na.omit(MERGE3$MEMBER.ID.z)) %in% unique(na.omit(MERGE3$MEMBER.ID.y))));
+
+```
+
+## 11. Use first name, last name and address 2 to append ID.
+```{r FirstLastNameAddress2}
+NameAdrs2 <-  unique(na.omit(All[c("MEMBER.ID", "FIRST.NAME","LAST.NAME", "PRIMARY.ADDRESS.2")]));
+MERGE4 <- merge(MERGE3, NameAdrs2, by.x = c("First.Name","Last.Name", "Home.Address.2"), by.y = c("FIRST.NAME","LAST.NAME", "PRIMARY.ADDRESS.2"), all.x = TRUE, all.y=FALSE);
+
+colnames(MERGE4)[which(names(MERGE4) == "MEMBER.ID")] <- "MEMBER.ID.x1";
+
+dim(MERGE4[!(is.na(MERGE4$MEMBER.ID.x1)),]);
+# MERGE4 only add one ID, and the rest has no ID conflict.
+dim(MERGE4[is.na(MERGE4$MEMBER.ID.x) & is.na(MERGE4$MEMBER.ID.y) & is.na(MERGE4$MEMBER.ID.z) & 
+                   (!is.na(MERGE4$MEMBER.ID.x1)),]);
+
+```
+## 12. Use last name and company to append ID.
+```{r LastNameCompany}
+LastNameCompany <-  unique(na.omit(All[c("MEMBER.ID", "LAST.NAME", "COMPANY.NAME")]));
+MERGE5 <- merge(MERGE4, LastNameCompany, by.x = c("Last.Name", "Company"), by.y = c("LAST.NAME", "COMPANY.NAME"), all.x = TRUE, all.y = FALSE);
+
+# nrow(MERGE5) is larger than BosEvt, which means that there are ones with the sanme last name and company, but different ID. 
+# These are the ones with the sanme last name and company, but different ID.
+selectDup <- LastNameCompany[duplicated(LastNameCompany[,c("LAST.NAME", "COMPANY.NAME")])|duplicated(LastNameCompany[,c("LAST.NAME", "COMPANY.NAME")], fromLast=TRUE),];
+Dup1 <- MERGE5[MERGE5$Last.Name == "bozas" & MERGE5$Company == "polvora advertising",];
+# Dup2 and Dup3 are empty.
+Dup2 <- MERGE5[MERGE5$Last.Name == "deiana" & MERGE5$Company == "worcester polytechnic institute",];
+ Dup3 <- MERGE5[MERGE5$Last.Name == "napper rogers" & MERGE5$Company == "johnson & wales university",];
+
+LNC2 <- LastNameCompany[!(LastNameCompany$LAST.NAME == "bozas" & LastNameCompany$COMPANY.NAME == "polvora advertising"),];
+MERGE5 <- merge(MERGE4, LNC2, by.x = c("Last.Name", "Company"), by.y = c("LAST.NAME", "COMPANY.NAME"), all.x = TRUE, all.y = FALSE);
+
+colnames(MERGE5)[which(names(MERGE5) == "MEMBER.ID")] <- "MEMBER.ID.y1";
+
+dim(MERGE5[!(is.na(MERGE5$MEMBER.ID.y1)),]);
+
+table(MERGE5$MEMBER.ID.y1 == MERGE5$MEMBER.ID.x);
+
+MERGE5[which(!(MERGE5$MEMBER.ID.y1 == MERGE5$MEMBER.ID.x)),]$MEMBER.ID.y1 <- NA;
+which(!(MERGE5$MEMBER.ID.y1 == MERGE5$MEMBER.ID.y));
+which(!(MERGE5$MEMBER.ID.y1 == MERGE5$MEMBER.ID.z));
+which(!(MERGE5$MEMBER.ID.y1 == MERGE5$MEMBER.ID.x1));
+
+dim(MERGE5[is.na(MERGE5$MEMBER.ID.x) & is.na(MERGE5$MEMBER.ID.y) & is.na(MERGE5$MEMBER.ID.z) & 
+                    is.na(MERGE5$MEMBER.ID.x1) & (!is.na(MERGE5$MEMBER.ID.y1)),]);
+```
+
+## 13. Check if there are more than one ID for each row.
+```{r CheckIDs}
+MERGE5$count <- apply(MERGE5[c("MEMBER.ID.x", "MEMBER.ID.y", "MEMBER.ID.z", "MEMBER.ID.x1", "MEMBER.ID.y1")],1,function(x) length(unique(na.omit(x))));
+
+# 1706 ID, no conflict.
+table(MERGE5$count);
+# write.csv(MERGE5, "MERGE.csv", row.names = FALSE, na = "");
+
+```
+
+```{r writeMergeFile}
+MERGE6 <- MERGE5[MERGE5$count == 1,];
+ids <- apply(MERGE6[c("MEMBER.ID.x", "MEMBER.ID.y", "MEMBER.ID.z", "MEMBER.ID.x1", "MEMBER.ID.y1")],1,function(x) unique(na.omit(x)));
+
+MERGE6$MEMBER.ID <- ids;
+
+MERGE6 <-MERGE6[,!names(MERGE6) %in% c("MEMBER.ID.x", "MEMBER.ID.y", "MEMBER.ID.z", "MEMBER.ID.x1", "MEMBER.ID.y1", "count")]
+
+write.csv(MERGE6, "MERGEID.csv", row.names = FALSE);
+```
+
+```{r addIDforBosEvt}
+BosEvtQC <- BosEvt;
+idEvt <- 1:nrow(BosEvtQC);
+BosEvtQC$idEvt <- idEvt;
+```
+
+
+```{r QCEmail}
+colnames(BosEvtQC)[which(names(BosEvtQC) == "Email")] <- "EmailEvt";
+
+EmlUn <- unique(na.omit(All[c("MEMBER.ID","EMAIL.ADDRESS")]));
+# idMem is the row number in membership dataset All.
+rowMem <- as.numeric(rownames(EmlUn));
+EmlUn$idMem <- rowMem;
+
+colnames(EmlUn)[which(names(EmlUn) == "EMAIL.ADDRESS")] <- "EMAIL.ADDRESSMem";
+colnames(EmlUn)[which(names(EmlUn) =="MEMBER.ID")] <- "MEMBER.ID.x";
+
+Merge1 <- merge(BosEvtQC[,c("EmailEvt","idEvt")], EmlUn, by.x = "EmailEvt", by.y = "EMAIL.ADDRESSMem", all.x = FALSE, all.y = FALSE);
+
+Merge1$EMAIL.ADDRESSMem <- EmlUn[match(Merge1$idMem, EmlUn$idMem), "EMAIL.ADDRESSMem"];
+Merge1 <- Merge1[,c("idEvt", "EmailEvt", "idMem", "EMAIL.ADDRESSMem", "MEMBER.ID.x")]
+Merge1 <- Merge1[order(Merge1$idEvt),];
+
+# write.xlsx(Merge1, "Merge_ID_x.xlsx", row.names = FALSE);
+```
+
+```{r QCfirstlastNameCompany}
+colnames(BosEvtQC)[which(names(BosEvtQC) == "First.Name")] <- "First.NameEvt";
+colnames(BosEvtQC)[which(names(BosEvtQC) == "Last.Name")] <- "Last.NameEvt";
+colnames(BosEvtQC)[which(names(BosEvtQC) == "Company")] <- "CompanyEvt";
+
+FLCUn <- unique(na.omit(All[c("MEMBER.ID","FIRST.NAME", "LAST.NAME", "COMPANY.NAME")]));
+
+rowMem <- as.numeric(rownames(FLCUn));
+# idMem is the row number in membership dataset All. 
+FLCUn$idMem <- rowMem;
+
+colnames(FLCUn)[which(names(FLCUn) == "FIRST.NAME")] <- "FIRST.NAMEMem";
+colnames(FLCUn)[which(names(FLCUn) == "LAST.NAME")] <- "LAST.NAMEMem";
+colnames(FLCUn)[which(names(FLCUn) == "COMPANY.NAME")] <- "COMPANY.NAMEMem";
+colnames(FLCUn)[which(names(FLCUn) =="MEMBER.ID")] <- "MEMBER.ID.y";
+
+Merge2 <- merge(BosEvtQC[, c("First.NameEvt","Last.NameEvt","CompanyEvt","idEvt")], FLCUn, by.x = c("First.NameEvt", "Last.NameEvt", "CompanyEvt"), by.y = c("FIRST.NAMEMem", "LAST.NAMEMem",  "COMPANY.NAMEMem"), all.x = FALSE, all.y = FALSE);
+
+Merge2$FIRST.NAMEMem <- FLCUn[match(Merge2$idMem, FLCUn$idMem), "FIRST.NAMEMem"];
+Merge2$LAST.NAMEMem <- FLCUn[match(Merge2$idMem, FLCUn$idMem), "LAST.NAMEMem"];
+Merge2$COMPANY.NAMEMem <- FLCUn[match(Merge2$idMem, FLCUn$idMem), "COMPANY.NAMEMem"];
+Merge2 <- Merge2[,c("idEvt", "First.NameEvt", "Last.NameEvt","CompanyEvt","idMem", "FIRST.NAMEMem", "LAST.NAMEMem","COMPANY.NAMEMem","MEMBER.ID.y")];
+
+Merge2 <- Merge2[order(Merge2$idEvt),];
+# write.xlsx(Merge2, "Merge_ID_y.xlsx", row.names = FALSE);
+```
+
+```{r QCFirstLastNameAddress1}
+
+colnames(BosEvtQC)[which(names(BosEvtQC) == "Home.Address.1")] <- "Home.Address.1Evt";
+
+FLA1Un <- unique(na.omit(All[c("MEMBER.ID","FIRST.NAME","LAST.NAME", "PRIMARY.ADDRESS.1")]));
+
+rowMem <- as.numeric(rownames(FLA1Un));
+# idMem is the row number in membership dataset All. 
+FLA1Un$idMem <- rowMem;
+
+colnames(FLA1Un)[which(names(FLA1Un) == "FIRST.NAME")] <- "FIRST.NAMEMem";
+colnames(FLA1Un)[which(names(FLA1Un) == "LAST.NAME")] <- "LAST.NAMEMem";
+colnames(FLA1Un)[which(names(FLA1Un) == "PRIMARY.ADDRESS.1")] <- "PRIMARY.ADDRESS.1Mem";
+colnames(FLA1Un)[which(names(FLA1Un) =="MEMBER.ID")] <- "MEMBER.ID.z";
+
+Merge3 <- merge(BosEvtQC[, c("First.NameEvt","Last.NameEvt", "Home.Address.1Evt","idEvt")], FLA1Un, by.x = c("First.NameEvt","Last.NameEvt", "Home.Address.1Evt"), by.y = c("FIRST.NAMEMem","LAST.NAMEMem",  "PRIMARY.ADDRESS.1Mem"), all.x = FALSE, all.y = FALSE);
+
+Merge3$FIRST.NAMEMem <- FLA1Un[match(Merge3$idMem, FLA1Un$idMem), "FIRST.NAMEMem"];
+Merge3$LAST.NAMEMem <- FLA1Un[match(Merge3$idMem, FLA1Un$idMem), "LAST.NAMEMem"];
+Merge3$PRIMARY.ADDRESS.1Mem <-FLA1Un[match(Merge3$idMem, FLA1Un$idMem), "PRIMARY.ADDRESS.1Mem"];
+Merge3 <- Merge3[,c("idEvt", "First.NameEvt", "Last.NameEvt","Home.Address.1Evt","idMem", "FIRST.NAMEMem", "LAST.NAMEMem","PRIMARY.ADDRESS.1Mem","MEMBER.ID.z")];
+
+Merge3 <- Merge3[order(Merge3$idEvt),];
+# write.xlsx(Merge3, "Merge_ID_z.xlsx", row.names = FALSE);
+```
+
+```{r QCFirstLastNameAddress2}
+
+colnames(BosEvtQC)[which(names(BosEvtQC) == "Home.Address.2")] <- "Home.Address.2Evt";
+
+FLA2Un <- unique(na.omit(All[c("MEMBER.ID","FIRST.NAME","LAST.NAME", "PRIMARY.ADDRESS.2")]));
+
+rowMem <- as.numeric(rownames(FLA2Un));
+# idMem is the row number in membership dataset All. 
+FLA2Un$idMem <- rowMem;
+
+colnames(FLA2Un)[which(names(FLA2Un) == "FIRST.NAME")] <- "FIRST.NAMEMem";
+colnames(FLA2Un)[which(names(FLA2Un) == "LAST.NAME")] <- "LAST.NAMEMem";
+colnames(FLA2Un)[which(names(FLA2Un) == "PRIMARY.ADDRESS.2")] <- "PRIMARY.ADDRESS.2Mem";
+colnames(FLA2Un)[which(names(FLA2Un) =="MEMBER.ID")] <- "MEMBER.ID.x1";
+
+Merge4 <- merge(BosEvtQC[, c("First.NameEvt","Last.NameEvt", "Home.Address.2Evt","idEvt")], FLA2Un, by.x = c("First.NameEvt","Last.NameEvt", "Home.Address.2Evt"), by.y = c("FIRST.NAMEMem","LAST.NAMEMem",  "PRIMARY.ADDRESS.2Mem"), all.x = FALSE, all.y = FALSE);
+
+Merge4$FIRST.NAMEMem <- FLA2Un[match(Merge4$idMem, FLA2Un$idMem), "FIRST.NAMEMem"];
+Merge4$LAST.NAMEMem <- FLA2Un[match(Merge4$idMem, FLA2Un$idMem), "LAST.NAMEMem"];
+Merge4$PRIMARY.ADDRESS.2Mem <-FLA2Un[match(Merge4$idMem, FLA2Un$idMem), "PRIMARY.ADDRESS.2Mem"];
+Merge4 <- Merge4[,c("idEvt", "First.NameEvt", "Last.NameEvt","Home.Address.2Evt","idMem", "FIRST.NAMEMem", "LAST.NAMEMem","PRIMARY.ADDRESS.2Mem","MEMBER.ID.x1")];
+
+Merge4 <- Merge4[order(Merge4$idEvt),];
+# write.xlsx(Merge4, "Merge_ID_x1.xlsx", row.names = FALSE);
+```
+
+```{r QClastNameCompany}
+LCUn <- unique(na.omit(All[c("MEMBER.ID", "LAST.NAME", "COMPANY.NAME")]));
+
+LCUn <- LCUn[!(LCUn$LAST.NAME == "bozas" & LCUn$COMPANY.NAME == "polvora advertising"),];
+
+rowMem <- as.numeric(rownames(LCUn));
+# idMem is the row number in membership dataset All. 
+LCUn$idMem <- rowMem;
+
+colnames(LCUn)[which(names(LCUn) == "LAST.NAME")] <- "LAST.NAMEMem";
+colnames(LCUn)[which(names(LCUn) == "COMPANY.NAME")] <- "COMPANY.NAMEMem";
+colnames(LCUn)[which(names(LCUn) =="MEMBER.ID")] <- "MEMBER.ID.y1";
+
+Merge5 <- merge(BosEvtQC[, c("Last.NameEvt","CompanyEvt","idEvt")], LCUn, by.x = c( "Last.NameEvt", "CompanyEvt"), by.y = c("LAST.NAMEMem",  "COMPANY.NAMEMem"), all.x = FALSE, all.y = FALSE);
+
+Merge5$LAST.NAMEMem <- LCUn[match(Merge5$idMem, LCUn$idMem), "LAST.NAMEMem"];
+Merge5$COMPANY.NAMEMem <- LCUn[match(Merge5$idMem, LCUn$idMem), "COMPANY.NAMEMem"];
+Merge5 <- Merge5[,c("idEvt", "Last.NameEvt","CompanyEvt","idMem",  "LAST.NAMEMem","COMPANY.NAMEMem","MEMBER.ID.y1")];
+
+Merge5 <- Merge5[order(Merge5$idEvt),];
+# write.xlsx(Merge5, "Merge_ID_y1.xlsx", row.names = FALSE);
+```
+
+
+```{r SaveEvtMem}
+# xlcFreeMemory() : to clear java memory
+# add id to BosEvt and All, then save them.
+BosEvtID <- BosEvt;
+BosEvtID <- cbind(idEvt = 1:nrow(BosEvtID), BosEvtID);
+# write.xlsx(BosEvtID, "BosEvtwithID.xlsx", row.names = FALSE,showNA = FALSE);
+
+AllID <- All;
+AllID <- cbind(idMem = 1:nrow(AllID), AllID);
+# write.xlsx(AllID, "AllMembershipwithID.xlsx", row.names = FALSE,showNA = FALSE);
+```
+
+
+
+
+
