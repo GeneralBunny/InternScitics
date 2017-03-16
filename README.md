@@ -1,6 +1,6 @@
 ## This folder contains the codes when I worked on the AMA (American Marketing Association) Membership Retention project.
 
-The R codes are running on platform x86_64-apple-darwin13.4.0 in R version 3.3.1. 
+## The R codes are running on platform x86_64-apple-darwin13.4.0 in R version 3.3.1. 
 
 MonthDiff.R are the tricks for data transformation and aggregation.
 
@@ -19,3 +19,7 @@ AMAMembership.Rmd is the R Markdown file for data analysis on the AMA Membership
 3. It shows the number of times each member appears in the combined data, ordered in MEMBER.SINCE.DATE.
 
 At the end of the file, a strategy is designed to define if the member renews the membership or not. For the member who has EXPIRATION.DATE 4 months after the DATE.PULLED2, and renewed the membership within 10 months after DATE.PULLED2, label the member at DATE.PULLED2 with Renew == 1. If the member did not renew it within 10 months after DATE.PULLED2, then label Renew == 0.
+
+AMA_Boston_ID_03_03.Rmd is to match the MEMBER.ID in the membership dataset to event dataset. Since the both the membership and event dataset contain proprietary information, they are not uploaded here. It uses the merge() function (similar to JOIN in SQL) with options of all.x = TRUE/FALSE, all.y = TRUE/FALSE (similar to LEFT JOIN, RIGHT JOIN in SQL). I tried to merge the two file using different combinations of the variable (by.x = "Email", by = by.x = c("First.Name","Last.Name", "Company"), by.x = c("First.Name","Last.Name", "Home.Address.1"), etc.). There are conflicts from different results, and I use the result from "Email" as the correct one.
+
+WaterFall.txt is the QC file for MEMBER.ID matching. It lists the results from each matching methods, and the final result as well.
