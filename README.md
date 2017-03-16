@@ -1,5 +1,7 @@
 ## This folder contains the codes when I worked on the AMA (American Marketing Association) Membership Retention project.
 
+The R codes are running on platform x86_64-apple-darwin13.4.0 in R version 3.3.1. 
+
 MonthDiff.R are the tricks for data transformation and aggregation.
 
 AMAMembership.Rmd is the R Markdown file for data analysis on the AMA Membership dataset. Since the dataset contains proprietary information, it is not uploaded here. It combines 36 xlsx files for the membership from September 2013 to september 2016, missing the file from August, 2015. The goal is to identify who renews their membership (RENEW ==1, otherwise RENEW == 0), and when they renew it, which will be the dependent variable for future logistic regression modeling. 
