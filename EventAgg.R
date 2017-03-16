@@ -128,9 +128,7 @@ for (i in 1:nrow(RenewData)){
 
 Agg <- do.call(rbind, lapply(BosEvtRenewID, Sel));
 
-# Agg$B_recency[Agg$B_recency == Inf] <- 0;
-
-write.csv(Agg, file = "Agg.csv", row.names = FALSE);
+Agg$B_recency[Agg$B_recency == Inf] <- 0;
 
 # Add all the MEMBER.ID from renew-selected file to the aggregate file
 sub1 <- subset(RenewSel, select=c("MEMBER.ID", "RENEW", "DATE.PULLED"));
