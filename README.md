@@ -2,9 +2,11 @@
 
 ## The R codes are running on platform x86_64-apple-darwin13.4.0 in R version 3.3.1. 
 
-MonthDiff.R are the tricks for data transformation and aggregation.
+## MonthDiff.R 
+are the tricks for data transformation and aggregation.
 
-AMAMembership.Rmd is the R Markdown file for data analysis on the AMA Membership dataset. Since the dataset contains proprietary information, it is not uploaded here. It combines 36 xlsx files for the membership from September 2013 to september 2016, missing the file from August, 2015. The goal is to identify who renews their membership (RENEW ==1, otherwise RENEW == 0), and when they renew it, which will be the dependent variable for future logistic regression modeling. 
+## AMAMembership.Rmd 
+is the R Markdown file for data analysis on the AMA Membership dataset. Since the dataset contains proprietary information, it is not uploaded here. It combines 36 xlsx files for the membership from September 2013 to september 2016, missing the file from August, 2015. The goal is to identify who renews their membership (RENEW ==1, otherwise RENEW == 0), and when they renew it, which will be the dependent variable for future logistic regression modeling. 
  
  After combing all the files, all the dates are in Date type. The important ones are "MEMBER.SINCE.DATE", "EXPIRATION.DATE" and "DATE.PULLED".
  
@@ -20,6 +22,11 @@ AMAMembership.Rmd is the R Markdown file for data analysis on the AMA Membership
 
 At the end of the file, a strategy is designed to define if the member renews the membership or not. For the member who has EXPIRATION.DATE 4 months after the DATE.PULLED2, and renewed the membership within 10 months after DATE.PULLED2, label the member at DATE.PULLED2 with Renew == 1. If the member did not renew it within 10 months after DATE.PULLED2, then label Renew == 0.
 
-AMA_Boston_ID_03_03.Rmd is to match the MEMBER.ID in the membership dataset to event dataset. Since the both the membership and event dataset contain proprietary information, they are not uploaded here. It uses the merge() function (similar to JOIN in SQL) with options of all.x = TRUE/FALSE, all.y = TRUE/FALSE (similar to LEFT JOIN, RIGHT JOIN in SQL). I tried to merge the two file using different combinations of the variable (by.x = "Email", by = by.x = c("First.Name","Last.Name", "Company"), by.x = c("First.Name","Last.Name", "Home.Address.1"), etc.). There are conflicts from different results, and I use the result from "Email" as the correct one.
+## AMA_Boston_ID_03_03.Rmd 
+is to match the MEMBER.ID in the membership dataset to event dataset. Since the both the membership and event dataset contain proprietary information, they are not uploaded here. It uses the merge() function (similar to JOIN in SQL) with options of all.x = TRUE/FALSE, all.y = TRUE/FALSE (similar to LEFT JOIN, RIGHT JOIN in SQL). I tried to merge the two file using different combinations of the variable (by.x = "Email", by = by.x = c("First.Name","Last.Name", "Company"), by.x = c("First.Name","Last.Name", "Home.Address.1"), etc.). There are conflicts from different results, and I use the result from "Email" as the correct one.
 
-WaterFall.txt is the QC file for MEMBER.ID matching. It lists the results from each matching methods, and the final result as well.
+## WaterFall.txt 
+is the QC file for MEMBER.ID matching. It lists the results from each matching methods, and the final result as well.
+
+## EventAgg.R
+uses "BosEvtRenew_GitHub.csv" and "data_1312to1602(Nov1508).txt" 
