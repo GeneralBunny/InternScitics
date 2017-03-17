@@ -52,6 +52,18 @@ g2 <- data.frame(MEMBER.ID =  integer(),
                  B_OdTp_Complimentary_6mos =  numeric(0),
                  #B_OdTp_Other_12mos = numeric(0),
                  #B_OdTp_Other_6mos = numeric(0),
+                 B_TkTp_AMA_12mos = numeric(0),
+                 B_TkTp_AMA_6mos = numeric(0),
+                 B_TkTp_AMAEarly_12mos = numeric(0),
+                 B_TkTp_AMAEarly_6mos = numeric(0),
+                 B_TkTp_NonAMA_12mos = numeric(0),
+                 B_TkTp_NonAMA_6mos = numeric(0),
+                 B_TkTp_NonAMAEarly_12mos = numeric(0),
+                 B_TkTp_NonAMAEarly_6mos = numeric(0),
+                 B_TkTp_Volunteer_12mos = numeric(0),
+                 B_TkTp_Volunteer_6mos = numeric(0),
+                 B_TkTp_Other_12mos = numeric(0),
+                 B_TkTp_Other_6mos = numeric(0),
                  B_Hr_AMAWeb_12mos = numeric(0),
                  B_Hr_AMAWeb_6mos = numeric(0),
                  B_Hr_Email_12mos = numeric(0),
@@ -105,6 +117,38 @@ for (i in 1:nrow(RenewData)){
                 #                                 | Order.Type == "Paid with Check")),
                 #B_OdTp_Other_6mos = nrow(subset(six, Order.Type == "Other"
                 #                                 | Order.Type == "Paid with Check")),
+                B_TkTp_AMA_12mos = nrow(subset(twelve, Ticket.Type %in% 
+                        c("AMA Member", "AMA Member Student", "Professional Members and Student Members", 
+                          "AMA Members rev", "AMA Members RSVP (will be verified)", "AMA Regular Ticket", 
+                          "Members (will be verified)", "AMA Member Non-student"))),
+                B_TkTp_AMA_6mos = nrow(subset(six, Ticket.Type %in% 
+                        c("AMA Member", "AMA Member Student", "Professional Members and Student Members", 
+                        "AMA Members rev", "AMA Members RSVP (will be verified)", "AMA Regular Ticket", 
+                        "Members (will be verified)", "AMA Member Non-student"))),
+                B_TkTp_AMAEarly_12mos = nrow(subset(twelve, Ticket.Type %in% 
+                        c("AMA Member (Early Bird)", "Early Bird Student AMA Member"))),
+                B_TkTp_AMAEarly_6mos = nrow(subset(six, Ticket.Type %in% 
+                        c("AMA Member (Early Bird)", "Early Bird Student AMA Member"))),
+                B_TkTp_NonAMA_12mos = nrow(subset(twelve, Ticket.Type %in% 
+                        c("AMA Non-member", "General Admission"))),
+                B_TkTp_NonAMA_6mos = nrow(subset(six, Ticket.Type %in% 
+                        c("AMA Non-member", "General Admission"))),
+                B_TkTp_NonAMAEarly_12mos = nrow(subset(twelve, Ticket.Type %in% 
+                        c("AMA Non-member (Early Bird)"))),
+                B_TkTp_NonAMAEarly_6mos = nrow(subset(six, Ticket.Type %in% 
+                        c("AMA Non-member (Early Bird)"))),
+                B_TkTp_Volunteer_12mos = nrow(subset(twelve, Ticket.Type %in% 
+                        c("AMA Volunteer", "AMA Boston Volunteer"))),
+                B_TkTp_Volunteer_6mos = nrow(subset(six, Ticket.Type %in% 
+                        c("AMA Volunteer", "AMA Boston Volunteer"))),
+                B_TkTp_Other_12mos = nrow(subset(twelve, Ticket.Type %in% 
+                        c("Attendee", "Yes I'm in!", "One Guest","RSVP", 
+                          "Social Media/Communication Teams Appreciation Night at Jillians", 
+                          "Save The Date", "Early Bird Registration", "Paid with Check"))),
+                B_TkTp_Other_6mos = nrow(subset(six, Ticket.Type %in% 
+                        c("Attendee", "Yes I'm in!", "One Guest","RSVP", 
+                        "Social Media/Communication Teams Appreciation Night at Jillians", 
+                        "Save The Date", "Early Bird Registration", "Paid with Check"))),
                 B_Hr_AMAWeb_12mos = nrow(subset(twelve, HEAR %in% c("AMA Boston Website", "Internet Search"))),
                 B_Hr_AWAWeb_6mos = nrow(subset(six, HEAR %in% c("AMA Boston Website", "Internet Search"))),
                 B_Hr_Email_12mos = nrow(subset(twelve, HEAR %in% c("AMA Email", "Email", "Nirmal's email!"))),
@@ -129,6 +173,8 @@ for (i in 1:nrow(RenewData)){
 Agg <- do.call(rbind, lapply(BosEvtRenewID, Sel));
 
 Agg$B_recency[Agg$B_recency == Inf] <- 0;
+
+# write.csv(Agg, file = "Agg.csv", row.names = FALSE);
 
 # Add all the MEMBER.ID from renew-selected file to the aggregate file
 sub1 <- subset(RenewSel, select=c("MEMBER.ID", "RENEW", "DATE.PULLED"));
