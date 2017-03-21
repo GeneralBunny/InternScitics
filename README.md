@@ -40,7 +40,22 @@ The specifications of data aggregation is in "Agg_Spec.docx".
 
 ## 5. Use Information Value for varialbe selection.
 ### IV_WOE.R
-For logistic regression, log(p/(1-p))=a*X1+b*X2+...+z*Xn, here for X1=Independent variable 1, and the fitting result is a. 
+Weight of eveidence (WOE) is \ln(Percentage of Goods/Percentage of Bads) for each independent variable. For example, as shown below, for the aggregated variable B_amt_12mos (this is the sum of total paid for Boston event where the order date is within 12 month of date.pulled), the number of total paid within the range [0, 18.42] with RENEW == 1 divided by the number with RENEW == 1 is 0.31524008.
+
+IV$Tables$B_amt_12mos
+     B_amt_12mos   N    Percent          WOE          IV     Perc_G     Perc_B
+1             NA 735 0.64304462 -0.101611807 0.006579644 0.60542797 0.67018072
+2      [0,18.42] 285 0.24934383  0.446021589 0.057173146 0.31524008 0.20180723
+3  [20.21,29.69]  36 0.03149606 -0.125403572 0.057662843 0.02922756 0.03313253
+4  [31.74,53.24]  44 0.03849519 -1.519245138 0.125577385 0.01252610 0.05722892
+5 [57.37,296.97]  43 0.03762030 -0.001922515 0.125577524 0.03757829 0.03765060
+
+Information Value (IV) is 
+\begin{equation}
+\sum (Percentage of Goods - Percentage of Bads)\* WOE. 
+\end{equation}
+
+For a logistic regression, log(p/(1-p))=a + b\*X. After we do data aggregation for each independent variable, the variable X is change to WOE. 
 
 ## 6. Others files in this repository.
 ### MonthDiff.R 
