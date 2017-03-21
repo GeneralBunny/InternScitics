@@ -38,6 +38,10 @@ This R file reads "BosEvtRenew_GitHub.csv" and "data_1312to1602(Nov1508).txt".
 "data_1312to1602(Nov1508).txt" is the analysis file where RENEW == 0 and RENEW == 1 are labelled. It contains the information like DATE.PULLED when RENEW is defined. DATE.PULLED is used when I do data aggregation.
 The specifications of data aggregation is in "Agg_Spec.docx".
 
-## 5. Others files in this repository.
+## 5. Use Information Value for varialbe selection.
+### IV_WOE.R
+For logistic regression, log(p/(1-p))= a*X1+b*X2+...+z*Xn, here for X1=Independent variable 1, and the fitting result is a. 
+
+## 6. Others files in this repository.
 ### MonthDiff.R 
 It contains some codes for data transformation and aggregation.
