@@ -40,7 +40,7 @@ The specifications of data aggregation is in "Agg_Spec.docx".
 
 ## 5. Use Information Value for varialbe selection.
 ### IV_WOE.R
-For logistic regression, log(p/(1-p))= a*X1+b*X2+...+z*Xn, here for X1=Independent variable 1, and the fitting result is a. 
+For logistic regression, log(p/(1-p))=a*X1+b*X2+...+z*Xn, here for X1=Independent variable 1, and the fitting result is a. 
 
 ## 6. Others files in this repository.
 ### MonthDiff.R 
