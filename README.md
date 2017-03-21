@@ -29,7 +29,7 @@ At the end of the file, a strategy is designed to define if the member renews th
 Since the both the membership and event dataset contain proprietary information, they are not uploaded here. It uses the merge() function (similar to JOIN in SQL) with options of all.x = TRUE/FALSE, all.y = TRUE/FALSE (similar to LEFT JOIN, RIGHT JOIN in SQL). I tried to merge the two file using different combinations of the variable (by.x = "Email", by = by.x = c("First.Name","Last.Name", "Company"), by.x = c("First.Name","Last.Name", "Home.Address.1"), etc.). There are conflicts from different results, and I use the result from "Email" as the correct one.
 
 ### WaterFall.txt 
-is the QC file for MEMBER.ID matching. It lists the results from each matching methods, and the final result as well.
+It is the QC file for MEMBER.ID matching. It lists the results from each matching methods, and the final result as well.
 
 ## 4. Data aggregation on event dataset.
 ### EventAgg.R
@@ -40,4 +40,4 @@ The specifications of data aggregation is in "Agg_Spec.docx".
 
 ## 5. Others files in this repository.
 ### MonthDiff.R 
-are the tricks for data transformation and aggregation.
+It contains some codes for data transformation and aggregation.
