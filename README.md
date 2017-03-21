@@ -72,9 +72,6 @@ For example, as shown below, for the aggregated variable B_amt_12mos (this is th
 - 4  [31.74,53.24]  44 0.03849519 -1.519245138 0.125577385 0.01252610 0.05722892
 - 5 [57.37,296.97]  43 0.03762030 -0.001922515 0.125577524 0.03757829 0.03765060
 ```
-The WOE plots for the top 5 variables with the largest IV are shown below.
-![alt tag](https://github.com/GeneralBunny/InternScitics/blob/master/WOE_5Var.jpeg)
-
 Information Value (IV) 
 IV = \sum (Percentage of Goods - Percentage of Bads)\* WOE. 
 Some of the example of the IV values are shown below. 
@@ -96,6 +93,9 @@ A rule of thumb for variable selection using IV is that
 * 0.1 to 0.3: medium 
 * 0.3 to 0.5: strong
 * \> 0.5: suspicious
+
+The WOE plots for the top 5 variables with the largest IV are shown below.
+![alt tag](https://github.com/GeneralBunny/InternScitics/blob/master/WOE_5Var.jpeg)
 
 For a logistic regression, log(p/(1-p))=a + b\*X1 + c\*X2 + ... + z\*Xn, fter we do data aggregation for each independent variable, the variable X is change to WOE. 
 ## 6. Logistic Regression
