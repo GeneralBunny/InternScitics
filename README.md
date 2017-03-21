@@ -38,9 +38,25 @@ It is the QC file for MEMBER.ID matching. It lists the results from each matchin
 ## 4. Data aggregation on event dataset.
 ### EventAgg.R
 This R file reads "BosEvtRenew_GitHub.csv" and "data_1312to1602(Nov1508).txt". 
+
+"data_1312to1602(Nov1508).txt" is the analysis file where RENEW == 0 and RENEW == 1 are labelled. It contains the information like DATE.PULLED when RENEW is defined. DATE.PULLED is used when I do data aggregation. 
+
 "BosEvtRenew_GitHub.csv" is the Boston event data with the id labelled where the id's are in the renew-selected file where RENEW == 0 and RENEW == 1 are labelled.
-"data_1312to1602(Nov1508).txt" is the analysis file where RENEW == 0 and RENEW == 1 are labelled. It contains the information like DATE.PULLED when RENEW is defined. DATE.PULLED is used when I do data aggregation.
-The specifications of data aggregation is in "Agg_Spec.docx".
+
+The specifications of data aggregation is in "Agg_Spec.docx". Some example are shown below.
+```
+	Variable Name Suffix		      Description
+ 12mos	                      ORDER_DATE within 12 months of DATE_PULLED
+ 6mos	                       ORDER_DATE within 6 months of DATE_PULLED
+```
+
+```
+	Variable Name		 Variable Definition
+	B_order_12mos   12 months number of orders (Question: do we use quantity or not?)
+	B_order _6mos 		6 months number of orders
+	B_recency		     number of days between last ORDER DATE and DATE_PULLED
+ B_amt_12mos		   12 months sum of TOTAL PAID
+```
 
 ## 5. Use Information Value for variable selection.
 ### IV_WOE.R
