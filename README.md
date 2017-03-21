@@ -22,6 +22,8 @@ It is the R Markdown file for data analysis on the AMA Membership dataset. Since
  - 684951        1981-11-01          2017-06-30       Mar 2016        15
  ```
  3. It shows the number of times each member appears in the combined data, ordered in MEMBER.SINCE.DATE.
+ 
+ ![alt tag](https://github.com/GeneralBunny/InternScitics/blob/master/AppearFreq.jpeg)
 
 At the end of the file, a strategy is designed to define if the member renews the membership or not. For the member who has EXPIRATION.DATE 4 months after the DATE.PULLED2, and renewed the membership within 10 months after DATE.PULLED2, label the member at DATE.PULLED2 with Renew == 1. If the member did not renew it within 10 months after DATE.PULLED2, then label Renew == 0.
 
