@@ -75,9 +75,9 @@ A rule of thumb for variable selection using IV is that
 * 0.02 to 0.1: weak 
 * 0.1 to 0.3: medium 
 * 0.3 to 0.5: strong
-* > 0.5: suspicious
+*  > 0.5: suspicious
 
-For a logistic regression, log(p/(1-p))=a + b\*X. After we do data aggregation for each independent variable, the variable X is change to WOE. 
+For a logistic regression, log(p/(1-p))=a + b\*X1 + c\*X2 + ... + z\*Xn, fter we do data aggregation for each independent variable, the variable X is change to WOE. 
 ## 6. Logistic Regression
 
 ## 7. Others files in this repository.
