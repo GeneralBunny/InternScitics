@@ -52,7 +52,7 @@ The specifications of data aggregation is in "Agg_Spec.docx". Some example are s
 
 ```
 	Variable Name		 Variable Definition
-	B_order_12mos            12 months number of orders (Question: do we use quantity or not?)
+	B_order_12mos            12 months number of orders
 	B_order _6mos 		 6 months number of orders
 	B_recency		 number of days between last ORDER DATE and DATE_PULLED
         B_amt_12mos		 12 months sum of TOTAL PAID
