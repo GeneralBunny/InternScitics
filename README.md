@@ -40,7 +40,7 @@ This R file reads "BosEvtRenew_GitHub.csv" and "data_1312to1602(Nov1508).txt".
 "data_1312to1602(Nov1508).txt" is the analysis file where RENEW == 0 and RENEW == 1 are labelled. It contains the information like DATE.PULLED when RENEW is defined. DATE.PULLED is used when I do data aggregation.
 The specifications of data aggregation is in "Agg_Spec.docx".
 
-## 5. Use Information Value for varialbe selection.
+## 5. Use Information Value for variable selection.
 ### IV_WOE.R
 Weight of eveidence (WOE) for each variable is 
 WOE = \ln(Percentage of Goods/Percentage of Bads). 
