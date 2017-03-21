@@ -45,17 +45,17 @@ This R file reads "BosEvtRenew_GitHub.csv" and "data_1312to1602(Nov1508).txt".
 
 The specifications of data aggregation is in "Agg_Spec.docx". Some example are shown below.
 ```
-	Variable Name Suffix		      Description
- 12mos	                      ORDER_DATE within 12 months of DATE_PULLED
- 6mos	                       ORDER_DATE within 6 months of DATE_PULLED
+	Variable Name Suffix          Description
+        12mos	                      ORDER_DATE within 12 months of DATE_PULLED
+        6mos	                      ORDER_DATE within 6 months of DATE_PULLED
 ```
 
 ```
 	Variable Name		 Variable Definition
-	B_order_12mos   12 months number of orders (Question: do we use quantity or not?)
-	B_order _6mos 		6 months number of orders
-	B_recency		     number of days between last ORDER DATE and DATE_PULLED
- B_amt_12mos		   12 months sum of TOTAL PAID
+	B_order_12mos            12 months number of orders (Question: do we use quantity or not?)
+	B_order _6mos 		 6 months number of orders
+	B_recency		 number of days between last ORDER DATE and DATE_PULLED
+        B_amt_12mos		 12 months sum of TOTAL PAID
 ```
 
 ## 5. Use Information Value for variable selection.
@@ -91,11 +91,11 @@ print(head(IVsMR));
 ```
 
 A rule of thumb for variable selection using IV is that 
-*  < 0.02: unpredictive 
+* \< 0.02: unpredictive 
 * 0.02 to 0.1: weak 
 * 0.1 to 0.3: medium 
 * 0.3 to 0.5: strong
-*  > 0.5: suspicious
+* \> 0.5: suspicious
 
 For a logistic regression, log(p/(1-p))=a + b\*X1 + c\*X2 + ... + z\*Xn, fter we do data aggregation for each independent variable, the variable X is change to WOE. 
 ## 6. Logistic Regression
