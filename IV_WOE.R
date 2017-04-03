@@ -9,7 +9,7 @@ library(glmnet)
 # InformationValue package has a lot of statistics for logistic regression.
 
 
-Agg_all <- read.csv("Agg_all.csv", header = TRUE);
+Agg_all <- read.csv("Agg_all_3.csv", header = TRUE);
 
 #B_OdTy_Other_12mos and B_OdTy_Other_6mos, all 0's.
 # Not included in Agg_all.csv
