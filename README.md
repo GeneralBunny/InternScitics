@@ -37,13 +37,13 @@ It is the QC file for MEMBER.ID matching. It lists the results from each matchin
 
 ## 4. Data aggregation on event dataset.
 ### Agg.R
-This R file reads "BosEvtRenew_GitHub.csv" and "data_1312to1602(Nov1508).txt". 
+This R file reads "BosEvtRenew_GitHub.csv" (proprietary information, not uploaded here) and "data_1312to1602(Nov1508).txt" (proprietary information, not uploaded here). 
 
 "data_1312to1602(Nov1508).txt" is the analysis membership file where RENEW == 0 and RENEW == 1 are labelled. It contains the information like DATE.PULLED when RENEW is defined. DATE.PULLED is used when I do data aggregation. 
 
 "BosEvtRenew_GitHub.csv" is the Boston event data with the id labelled and the member id's are in the renew-selected file where RENEW == 0 and RENEW == 1 are labelled. The member id's who do not have event data are labeled as "NA" in "BosEvtRenew_GitHub.csv".
 
-The specifications of data aggregation is in "Agg_Spec.docx". Some example are shown below.
+The specifications of data aggregation is in "Agg_Spec.docx" (proprietary information, not uploaded here). Some example are shown below.
 ```
 	Variable Name Suffix          Description
         12mos	                      ORDER_DATE within 12 months of DATE_PULLED
@@ -57,11 +57,11 @@ The specifications of data aggregation is in "Agg_Spec.docx". Some example are s
 	B_recency		 number of days between last ORDER DATE and DATE_PULLED
         B_amt_12mos		 12 months sum of TOTAL PAID
 ```
-The aggregated data is saved in "Agg_all_3.csv".
+The aggregated data is saved in "Agg_all_3.csv" (proprietary information, not uploaded here).
 
 ## 5. Use Information Value for variable selection.
 ### IV_WOE.R
-This file analyzes the information value and weight of evidence on Agg_all_3.csv. It used the R package "Information", and here is the vignette of this package: https://cran.r-project.org/web/packages/Information/vignettes/Information-vignette.html In create_infotables(data = NULL, valid = NULL, y = NULL, bins = 10, trt = NULL, ncore = NULL, parallel = TRUE), the bins are typically selected such that the bins are roughly evenly sized with respect to the number of records in each bin (if possible). The output file IV_Summary.csv show the IV of each variable in descending order; "table.csv" show the frequency table of each variable. For plot_infotables, show_values = TRUE does not work in the "Information" package.
+This file analyzes the information value and weight of evidence on "Agg_all_3.csv" (proprietary information, not uploaded here). It used the R package "Information", and here is the vignette of this package: https://cran.r-project.org/web/packages/Information/vignettes/Information-vignette.html In create_infotables(data = NULL, valid = NULL, y = NULL, bins = 10, trt = NULL, ncore = NULL, parallel = TRUE), the bins are typically selected such that the bins are roughly evenly sized with respect to the number of records in each bin (if possible). The output file IV_Summary.csv show the IV of each variable in descending order; "table.csv" show the frequency table of each variable. For plot_infotables, show_values = TRUE does not work in the "Information" package.
 
 Here are my modifition to the original R package: 1. add Perc_G and Perc_B to IV$Tables$Var; 2. replace the original observations with WOE.
 
@@ -101,7 +101,7 @@ A rule of thumb for variable selection using IV is that
 The WOE plots for the top 5 variables with the largest IV are shown below.
 ![alt tag](https://github.com/GeneralBunny/InternScitics/blob/master/WOE_5Var.jpeg)
 
-The original observation in Agg_all_3.csv is replaced by its WOE and saved in "Agg_all_WOE.csv". NA value are also replaced by its WOE.
+The original observation in "Agg_all_3.csv" (proprietary information, not uploaded here) is replaced by its WOE and saved in "Agg_all_WOE.csv" (proprietary information, not uploaded here). NA value are also replaced by its WOE.
 
 ## 6. Logistic Regression
 
