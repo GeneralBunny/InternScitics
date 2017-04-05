@@ -2,7 +2,7 @@
 ## The R codes are running on platform x86_64-apple-darwin13.4.0 in R version 3.3.1. 
 
 ## 1. Introduction
-This project work on American Marketing Association membership and event data. The goal is to increase the membership retention rate by building a predictive model using historical membership event data.
+This project work on American Marketing Association membership and event data. The goal is to design a marketing strategy to increase the membership retention rate by building a predictive model using historical membership event data.
 
 ## 2. Data Cleaning and exploratory data analysis.
 
@@ -30,18 +30,18 @@ At the end of the file, a strategy is designed to define if the member renews th
 ## 3. Matching the MEMBER.ID in the membership dataset to event dataset.
 
 ### AMA_Boston_ID_03_03.Rmd 
-Since the both the membership and event dataset contain proprietary information, they are not uploaded here. It uses the merge() function (similar to JOIN in SQL) with options of all.x = TRUE/FALSE, all.y = TRUE/FALSE (similar to LEFT JOIN, RIGHT JOIN in SQL). I tried to merge the two file using different combinations of the variable (by.x = "Email", by = by.x = c("First.Name","Last.Name", "Company"), by.x = c("First.Name","Last.Name", "Home.Address.1"), etc.). There are conflicts from different results, and I use the result from "Email" as the correct one.
+Since the both the membership and event dataset contain proprietary information, they are not uploaded here. It uses the merge() function (similar to JOIN in SQL) with options of all.x = TRUE/FALSE, all.y = TRUE/FALSE (similar to LEFT JOIN, RIGHT JOIN in SQL). I tried to merge the two file using different combinations of the variable (by.x = "Email", by.x = c("First.Name","Last.Name", "Company"), by.x = c("First.Name","Last.Name", "Home.Address.1"), etc.). There are conflicts from different results, and I use the result from "Email" as the correct one.
 
 ### WaterFall.txt 
 It is the QC file for MEMBER.ID matching. It lists the results from each matching methods, and the final result as well.
 
 ## 4. Data aggregation on event dataset.
-### EventAgg.R
+### Agg.R
 This R file reads "BosEvtRenew_GitHub.csv" and "data_1312to1602(Nov1508).txt". 
 
-"data_1312to1602(Nov1508).txt" is the analysis file where RENEW == 0 and RENEW == 1 are labelled. It contains the information like DATE.PULLED when RENEW is defined. DATE.PULLED is used when I do data aggregation. 
+"data_1312to1602(Nov1508).txt" is the analysis membership file where RENEW == 0 and RENEW == 1 are labelled. It contains the information like DATE.PULLED when RENEW is defined. DATE.PULLED is used when I do data aggregation. 
 
-"BosEvtRenew_GitHub.csv" is the Boston event data with the id labelled where the id's are in the renew-selected file where RENEW == 0 and RENEW == 1 are labelled.
+"BosEvtRenew_GitHub.csv" is the Boston event data with the id labelled and the member id's are in the renew-selected file where RENEW == 0 and RENEW == 1 are labelled. The member id's who do not have event data are labeled as "NA" in "BosEvtRenew_GitHub.csv".
 
 The specifications of data aggregation is in "Agg_Spec.docx". Some example are shown below.
 ```
@@ -57,12 +57,16 @@ The specifications of data aggregation is in "Agg_Spec.docx". Some example are s
 	B_recency		 number of days between last ORDER DATE and DATE_PULLED
         B_amt_12mos		 12 months sum of TOTAL PAID
 ```
+The aggregated data is saved in "Agg_all_3.csv".
 
 ## 5. Use Information Value for variable selection.
 ### IV_WOE.R
-Weight of eveidence (WOE) for each variable is 
-WOE = \ln(Percentage of Goods/Percentage of Bads). 
-For example, as shown below, for the aggregated variable B_amt_12mos (this is the sum of total paid for Boston event where the order date is within 12 month of date.pulled), the number of total paid within the range [0, 18.42] with RENEW == 1 divided by the number with RENEW == 1 is 0.31524008.
+This file analyzes the information value and weight of evidence on Agg_all_3.csv. It used the R package "Information", and here is the vignette of this package: https://cran.r-project.org/web/packages/Information/vignettes/Information-vignette.html In create_infotables(data = NULL, valid = NULL, y = NULL, bins = 10, trt = NULL, ncore = NULL, parallel = TRUE), the bins are typically selected such that the bins are roughly evenly sized with respect to the number of records in each bin (if possible). The output file IV_Summary.csv show the IV of each variable in descending order; "table.csv" show the frequency table of each variable. For plot_infotables, show_values = TRUE does not work in the "Information" package.
+
+Here are my modifition to the original R package: 1. add Perc_G and Perc_B to IV$Tables$Var; 2. replace the original observations with WOE.
+
+IV$Tables is a list of the IV and WOE for all the variables. I add the percentage of good (Perc_G) and percentage of bad (Perc_B) to the results. One example is shown below. Weight of eveidence (WOE) for each variable is 
+WOE = \ln(Percentage of Goods/Percentage of Bads). For the aggregated variable B_amt_12mos (this is the sum of total paid for Boston event where the order date is within 12 month of date.pulled), the number of total paid within the range [0, 18.42] with RENEW == 1 divided by the number with RENEW == 1 is 0.31524008.
 ```
 - IV$Tables$B_amt_12mos
 -      B_amt_12mos   N    Percent          WOE          IV     Perc_G     Perc_B
@@ -72,10 +76,10 @@ For example, as shown below, for the aggregated variable B_amt_12mos (this is th
 - 4  [31.74,53.24]  44 0.03849519 -1.519245138 0.125577385 0.01252610 0.05722892
 - 5 [57.37,296.97]  43 0.03762030 -0.001922515 0.125577524 0.03757829 0.03765060
 ```
-Information Value (IV) 
-IV = \sum (Percentage of Goods - Percentage of Bads)\* WOE. 
-Some of the example of the IV values are shown below. 
 
+Information Value (IV) 
+IV = \sum (Percentage of Goods - Percentage of Bads)\* WOE. The IV values shown above is the accumulated IV values. 
+Some of the example of the IV values are shown below. 
 ```
 print(head(IVsMR));
                  Variable         IV
@@ -97,9 +101,10 @@ A rule of thumb for variable selection using IV is that
 The WOE plots for the top 5 variables with the largest IV are shown below.
 ![alt tag](https://github.com/GeneralBunny/InternScitics/blob/master/WOE_5Var.jpeg)
 
-For a logistic regression, log(p/(1-p))=a + b\*X1 + c\*X2 + ... + z\*Xn, fter we do data aggregation for each independent variable, the variable X is change to WOE. 
+The original observation in Agg_all_3.csv is replaced by its WOE. NA value are also replaced by its WOE.
+
 ## 6. Logistic Regression
 
 ## 7. Others files in this repository.
-### MonthDiff.R 
+### Tricks.R 
 It contains some codes for data transformation and aggregation.
