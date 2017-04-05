@@ -101,7 +101,7 @@ A rule of thumb for variable selection using IV is that
 The WOE plots for the top 5 variables with the largest IV are shown below.
 ![alt tag](https://github.com/GeneralBunny/InternScitics/blob/master/WOE_5Var.jpeg)
 
-The original observation in Agg_all_3.csv is replaced by its WOE. NA value are also replaced by its WOE.
+The original observation in Agg_all_3.csv is replaced by its WOE and saved in "Agg_all_WOE.csv". NA value are also replaced by its WOE.
 
 ## 6. Logistic Regression
 
