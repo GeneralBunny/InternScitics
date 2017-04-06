@@ -92,11 +92,9 @@ print(head(IVsMR));
 ```
 
 A rule of thumb for variable selection using IV is that 
-* \< 0.02: unpredictive 
-* 0.02 to 0.1: weak 
-* 0.1 to 0.3: medium 
-* 0.3 to 0.5: strong
-* \> 0.5: suspicious
+* \< 0.02: unpredictive  
+* 0.02 to 0.3: some predictive power 
+* \> 0.3: strong predictive power
 
 The WOE plots for the top 5 variables with the largest IV are shown below.
 ![alt tag](https://github.com/GeneralBunny/InternScitics/blob/master/WOE_5Var.jpeg)
